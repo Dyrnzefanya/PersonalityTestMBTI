@@ -566,3 +566,109 @@
             if (showResult) {
                 const result = calculateResult();
                 const Icon = result.icon;
+                
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 flex items-center justify-center p-4">
+                        <div className="max-w-2xl w-full bg-white rounded-3xl shadow-2xl p-8">
+                            <div className="text-center mb-6">
+                                <div className={`inline-flex justify-center items-center bg-gradient-to-r ${result.color} p-4 rounded-full mb-4 text-white`}>
+                                    <Icon className="w-16 h-16" />
+                                </div>
+                                <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                                    {result.name}
+                                </h2>
+                                <p className="text-xl text-gray-600 mb-4">
+                                    {result.description}
+                                </p>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="bg-gray-50 rounded-2xl p-6">
+                                    <h3 className="font-bold text-lg text-gray-800 mb-3">✨ Karakteristik Utama:</h3>
+                                    <ul className="space-y-2">
+                                        {result.traits.map((trait, index) => (
+                                            <li key={index} className="flex items-start gap-2 text-gray-700">
+                                                <span className="text-purple-600 mt-1">•</span>
+                                                <span>{trait}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="bg-green-50 rounded-2xl p-6">
+                                    <h3 className="font-bold text-lg text-gray-800 mb-2">💪 Kekuatan:</h3>
+                                    <p className="text-gray-700">{result.strength}</p>
+                                </div>
+
+                                <div className="bg-orange-50 rounded-2xl p-6">
+                                    <h3 className="font-bold text-lg text-gray-800 mb-2">🎯 Area Pengembangan:</h3>
+                                    <p className="text-gray-700">{result.weakness}</p>
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={restart}
+                                className="w-full mt-8 bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all flex items-center justify-center gap-2"
+                            >
+                                <RotateCcw className="w-5 h-5" />
+                                Test Ulang
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 flex items-center justify-center p-4">
+                    <div className="max-w-2xl w-full">
+                        <div className="mb-6">
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-white text-sm font-medium">
+                                    Pertanyaan {currentQuestion + 1} dari {questions.length}
+                                </span>
+                                <span className="text-white text-sm font-medium">
+                                    {Math.round(progress)}%
+                                </span>
+                            </div>
+                            <div className="w-full bg-white bg-opacity-30 rounded-full h-3">
+                                <div
+                                    className="bg-white h-3 rounded-full transition-all duration-300"
+                                    style={{ width: `${progress}%` }}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-3xl shadow-2xl p-8">
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">
+                                {questions[currentQuestion].question}
+                            </h2>
+                            
+                            <div className="space-y-3">
+                                {questions[currentQuestion].options.map((option, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => handleAnswer(index)}
+                                        className="w-full text-left p-5 rounded-xl border-2 border-gray-200 hover:border-purple-500 hover:bg-purple-50 transition-all transform hover:scale-102 active:scale-98"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white flex items-center justify-center font-semibold flex-shrink-0">
+                                                {String.fromCharCode(65 + index)}
+                                            </div>
+                                            <span className="text-gray-700 font-medium">{option.text}</span>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<PersonalityTest />);
+    </script>
+</body>
+</html>
